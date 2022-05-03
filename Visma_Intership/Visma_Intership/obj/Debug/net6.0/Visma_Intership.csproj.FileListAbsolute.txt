@@ -1,0 +1,15 @@
+C:\Users\simut\source\repos\Visma\Visma_Intership\Visma_Intership\obj\Debug\net6.0\Visma_Intership.csproj.AssemblyReference.cache
+C:\Users\simut\source\repos\Visma\Visma_Intership\Visma_Intership\obj\Debug\net6.0\Visma_Intership.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\simut\source\repos\Visma\Visma_Intership\Visma_Intership\obj\Debug\net6.0\Visma_Intership.AssemblyInfoInputs.cache
+C:\Users\simut\source\repos\Visma\Visma_Intership\Visma_Intership\obj\Debug\net6.0\Visma_Intership.AssemblyInfo.cs
+C:\Users\simut\source\repos\Visma\Visma_Intership\Visma_Intership\obj\Debug\net6.0\Visma_Intership.csproj.CoreCompileInputs.cache
+C:\Users\simut\source\repos\Visma\Visma_Intership\Visma_Intership\bin\Debug\net6.0\Visma_Intership.exe
+C:\Users\simut\source\repos\Visma\Visma_Intership\Visma_Intership\bin\Debug\net6.0\Visma_Intership.deps.json
+C:\Users\simut\source\repos\Visma\Visma_Intership\Visma_Intership\bin\Debug\net6.0\Visma_Intership.runtimeconfig.json
+C:\Users\simut\source\repos\Visma\Visma_Intership\Visma_Intership\bin\Debug\net6.0\Visma_Intership.dll
+C:\Users\simut\source\repos\Visma\Visma_Intership\Visma_Intership\bin\Debug\net6.0\Visma_Intership.pdb
+C:\Users\simut\source\repos\Visma\Visma_Intership\Visma_Intership\obj\Debug\net6.0\Visma_Intership.dll
+C:\Users\simut\source\repos\Visma\Visma_Intership\Visma_Intership\obj\Debug\net6.0\refint\Visma_Intership.dll
+C:\Users\simut\source\repos\Visma\Visma_Intership\Visma_Intership\obj\Debug\net6.0\Visma_Intership.pdb
+C:\Users\simut\source\repos\Visma\Visma_Intership\Visma_Intership\obj\Debug\net6.0\Visma_Intership.genruntimeconfig.cache
+C:\Users\simut\source\repos\Visma\Visma_Intership\Visma_Intership\obj\Debug\net6.0\ref\Visma_Intership.dll
