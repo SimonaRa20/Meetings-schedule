@@ -32,9 +32,9 @@
             return _meetings;
         }
 
-        public void RemoveMeeting(string name)
+        public void RemoveMeeting(Meeting removeMeeting)
         {
-            var meeting = _meetings.Where(x => x.Name == name).FirstOrDefault();
+            var meeting = _meetings.Where(x => x == removeMeeting).FirstOrDefault();
             _meetings.Remove(meeting);
             MeetingsUpdated?.Invoke(this, null);
             SaveMeetings();

@@ -5,6 +5,6 @@
         void ReadMeetings();
         void SaveMeetings();
         List<Meeting> GetMeetings();
-        public void RemoveMeeting(string name);
+        public void RemoveMeeting(Meeting meeting);
     }
 }

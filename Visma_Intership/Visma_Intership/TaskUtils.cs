@@ -52,6 +52,23 @@
             return meeting;
         }
 
+        public static Meeting RemoveMeeting(List<Meeting> list, int nr, string responsiblePerson)
+        {
+            int nrMeeting = nr - 1;
+            Meeting meeting = new Meeting();
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (nrMeeting == i)
+                {
+                    if (list[i].ResponsiblePerson == responsiblePerson)
+                    {
+                        meeting = list[i];
+                    }
+                }
+            }
+            return meeting;
+        }
+
 
 
         public static List<Meeting> FilterByDescription(List<Meeting> list, string description)

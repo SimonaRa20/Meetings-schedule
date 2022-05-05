@@ -28,15 +28,11 @@
             switch (command)
             {
                 case "Create meeting":
-                    Meeting newMeeting = TaskUtils.AddNewMeeting();
-                    Console.WriteLine("Chosen command - create meeting");
-
-                    meetingService.AddMeeting(newMeeting);
-                    TaskUtils.PrintMeetingsList(meetingList);
+                    CreateMeeting(meetingService, meetingList);
                     break;
 
                 case "Delete meeting":
-                    Console.WriteLine("Chosen command - delete meeting");
+                    DeleteMeeting(meetingService, meetingList);
                     break;
 
                 case "Add person to meeting":
@@ -53,9 +49,33 @@
                     Console.WriteLine("This command was not founded");
                     break;
             }
-            //TaskUtils.PrintMeetingsList(meetingList);
+        }
+        public static void CreateMeeting(MeetingService meetingService, List<Meeting> meetingList)
+        {
+            Meeting newMeeting = TaskUtils.AddNewMeeting();
+            Console.WriteLine("Chosen command - create meeting");
+            meetingService.AddMeeting(newMeeting);
+            TaskUtils.PrintMeetingsList(meetingList);
+        }
+
+        public static void DeleteMeeting(MeetingService meetingService, List<Meeting> meetingList)
+        {
+            Console.WriteLine("There is meetings list:");
+            TaskUtils.PrintMeetingsList(meetingList);
+            Console.Write("Please write what are you : ");
+            string nameSurname = Console.ReadLine();
+
+            Console.WriteLine("Please write meeting nr which you want to delete");
+            string deleteNr = Console.ReadLine();
+            int nr = Convert.ToInt32(deleteNr);
+
+            Meeting meeting = TaskUtils.RemoveMeeting(meetingList, nr, nameSurname);
+            meetingService.RemoveMeeting(meeting);
+            TaskUtils.PrintMeetingsList(meetingList);
         }
     }
+
+
 
 
 }
