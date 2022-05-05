@@ -1,6 +1,6 @@
 ﻿namespace Visma_Intership
 {
-    enum Type
+    public enum Type
     {
         Live = 1,
         InPerson = 2,

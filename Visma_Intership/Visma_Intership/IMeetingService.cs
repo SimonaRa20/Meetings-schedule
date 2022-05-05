@@ -2,7 +2,9 @@
 {
     public interface IMeetingService
     {
-        public void ReadMeetings();
-        public void SaveMeetings();
+        void ReadMeetings();
+        void SaveMeetings();
+        List<Meeting> GetMeetings();
+        public void RemoveMeeting(string name);
     }
 }

@@ -4,5 +4,6 @@
     {
         T ReadFile<T>(string filename);
         void SaveFile<T>(T items, string filename);
+        void DeleteFile(string filename);
     }
 }

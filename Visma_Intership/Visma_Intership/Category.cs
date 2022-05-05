@@ -1,6 +1,6 @@
 ﻿namespace Visma_Intership
 {
-    enum Category
+    public enum Category
     {
         CodeMonkey = 1,
         Hub = 2,

@@ -6,7 +6,7 @@ namespace Visma_Intership
     {
         public T ReadFile<T>(string filename)
         {
-            var backingFile = Path.GetDirectoryName(filename);
+            var backingFile = Path.GetFullPath(filename);
             if (!File.Exists(backingFile))
             {
                 return default;
@@ -24,7 +24,7 @@ namespace Visma_Intership
 
         public void SaveFile<T>(T items, string filename)
         {
-            var backingFile = Path.GetDirectoryName(filename);
+            var backingFile = Path.GetFullPath(filename);
 
             using (StreamWriter file = File.CreateText(backingFile))
             {
@@ -32,5 +32,8 @@ namespace Visma_Intership
                 serializer.Serialize(file, items);
             }
         }
+
+        public void DeleteFile(string filename)
+           => File.Delete(Path.Combine(FileSystem.AppDataDirectory, filename));
     }
 }
