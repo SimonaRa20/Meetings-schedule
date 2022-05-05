@@ -1,0 +1,22 @@
+{
+	{
+		"Name" : "StandUp",
+		"ResponsiblePerson" : "Simona Ragauskaite",
+		"Description" : "Progree with project",
+		"Category" : "Short",
+		"Type" : "Live",
+		"StartDate" : "2022-05-05",
+		"EndDate" : "2022-05-05",
+		"participants" : "Ieva", "Amandas",
+	},
+	{
+		"Name" : "StandUp",
+		"ResponsiblePerson" : "Lauryna Ragauskaite",
+		"Description" : "Progree with project",
+		"Category" : "Short",
+		"Type" : "Live",
+		"StartDate" : "2022-05-06",
+		"EndDate" : "2022-05-06",
+		"participants" : "Jolanta", "Laisvydas",
+	}
+}

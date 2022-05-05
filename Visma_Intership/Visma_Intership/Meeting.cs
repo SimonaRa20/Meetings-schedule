@@ -1,4 +1,6 @@
-﻿namespace Visma_Intership
+﻿using Newtonsoft.Json;
+
+namespace Visma_Intership
 {
     class Meeting
     {
@@ -9,6 +11,7 @@
         public Type Type { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public List<Participant> participants;
 
         public Meeting(string name, string responsiblePerson, string description,
             Category category, Type type, DateTime startDate, DateTime endDate)
@@ -22,6 +25,13 @@
             this.EndDate = endDate;
         }
 
+        public Meeting()
+        {
+        }
 
+        public string ToString(Formatting indented)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

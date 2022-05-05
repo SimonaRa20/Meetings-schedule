@@ -1,22 +1,64 @@
-﻿
-namespace Visma_Intership
+﻿namespace Visma_Intership
 {
     class Program
     {
-        static void Main(string[] args)
+
+
+        public static void Main(string[] args)
         {
-            Meeting meeting = new Meeting("StandUp", "Gabija Gurkyte", "Discuss how goes project", Category.Short, Type.Live,
-                new DateTime(2022, 5, 3), new DateTime(2022, 5, 3));
+            //MeetingService meetingService;
+            //SomeMethod(meetingService);
+            List<Meeting> meetingList = new List<Meeting>();
+            SomeMethod();
 
-            Console.WriteLine("Name : {0}", meeting.Name);
-            Console.WriteLine("ResponsiblePerson : {0}", meeting.ResponsiblePerson);
-            Console.WriteLine("Description : {0}", meeting.Description);
-            Console.WriteLine("Category : {0}", meeting.Category);
-            Console.WriteLine("Type : {0}", meeting.Type);
-            Console.WriteLine("StartDate : {0:yyy-MM-dd}", meeting.StartDate);
-            Console.WriteLine("EndDate : {0:yyy-MM-dd}", meeting.EndDate);
+
+            Console.WriteLine(meetingList.Count);
+
+            DateTime dt2 = new DateTime(2015, 12, 31);
+            //Meeting meeting = new Meeting("Stand Up", "Simona Ragauskaite", "Prisisakysime savo daromos uzduoties progresa", Category.Short,
+            // Type.Live, dt2, dt2);
+            //InOutUtils.AddNewMeeting(meetingList, meeting, fileName);
+
+            //string command = string.Empty;
+            Console.WriteLine("Commands list: \n*Create meeting \n*Delete meeting \n*Add person to meeting  \n*Remove person from meeting \n*Filter meetings\nPlease write command:");
+            string command = Console.ReadLine();
+
+            switch (command)
+            {
+                case "Create meeting":
+                    Console.WriteLine("Chosen command - create meeting");
+                    break;
+
+                case "Delete meeting":
+                    Console.WriteLine("Chosen command - delete meeting");
+                    break;
+
+                case "Add person to meeting":
+                    Console.WriteLine("Chosen command - add person to meeting");
+                    break;
+
+                case "Remove person from meeting":
+                    Console.WriteLine("Chosen command - remove person from meeting");
+                    break;
+                case "Filter meetings":
+                    Console.WriteLine("Chosen command - filter meetings");
+                    break;
+                default:
+                    Console.WriteLine("This command was not founded");
+                    break;
+            }
+
         }
+        //private MeetingService meetingService;
+        static void SomeMethod()
+        {
+            FileServise fileServise = new FileServise();
+            MeetingService meetingService = new MeetingService(fileServise);
+            meetingService.SaveMeetings();
+            meetingService.ReadMeetings();
 
-
+        }
     }
+
+
 }

@@ -13,3 +13,5 @@ C:\Users\simut\source\repos\Visma\Visma_Intership\Visma_Intership\obj\Debug\net6
 C:\Users\simut\source\repos\Visma\Visma_Intership\Visma_Intership\obj\Debug\net6.0\Visma_Intership.pdb
 C:\Users\simut\source\repos\Visma\Visma_Intership\Visma_Intership\obj\Debug\net6.0\Visma_Intership.genruntimeconfig.cache
 C:\Users\simut\source\repos\Visma\Visma_Intership\Visma_Intership\obj\Debug\net6.0\ref\Visma_Intership.dll
+C:\Users\simut\source\repos\Visma\Visma_Intership\Visma_Intership\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\simut\source\repos\Visma\Visma_Intership\Visma_Intership\obj\Debug\net6.0\Visma_Intership.csproj.CopyComplete
