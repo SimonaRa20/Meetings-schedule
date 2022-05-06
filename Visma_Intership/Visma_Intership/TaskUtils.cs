@@ -5,17 +5,24 @@
         public static void PrintMeetingsList(List<Meeting> list)
         {
             const int dashCount = 185;
-            string format = "| {0,5} | {1,15} | {2,30} | {3,50} | {4, 10} | {5,10} | {6,20} | {7,20} |";
+            string format = "| {0,5} | {1,15} | {2,30} | {3,50} | {4, 10} | {5,10} | {6,20} | {7,20} | {8,30} |";
             Console.WriteLine(new string('-', dashCount));
             Console.WriteLine(string.Format(format, "Nr",
-           "Name", "Responsible Person", "Description", "Category", "Type", "StartDate", "EndDate"));
+           "Name", "Responsible Person", "Description", "Category", "Type", "StartDate", "EndDate", "Participants"));
             Console.WriteLine(new string('-', dashCount));
             for (int i = 0; i < list.Count; i++)
             {
                 Meeting meeting = list[i];
+                string participantsList = string.Empty;
+                for (int j = 0; j < meeting.Participants.Count; j++)
+                {
+                    participantsList = participantsList + meeting.Participants[j].Name + ", ";
+                }
+
                 Console.WriteLine(string.Format(format,
                    i + 1, meeting.Name, meeting.ResponsiblePerson, meeting.Description, meeting.Category, meeting.Type,
-                   meeting.StartDate, meeting.EndDate));
+                   meeting.StartDate, meeting.EndDate, participantsList));
+
                 Console.WriteLine(new string('-', dashCount));
             }
         }
@@ -39,9 +46,13 @@
             meeting.Category = newCategory;
 
             Console.Write("Enter meeting type (Live/InPerson): ");
-            string type = Console.ReadLine();
-            Type newType = (Type)Enum.Parse(typeof(Type), type);
-            meeting.Type = newType;
+
+            Type result;
+            while (!Validator.ValidateType(RequestDataFromUser("Enter meeting type (Live/InPerson): "), out result))
+            {
+                Console.WriteLine("Please try again, type was incorrect");
+            }
+            meeting.Type = result;
 
             Console.Write("Enter meeting start date (f.e. 2020-05-05 11:00:00): ");
             string startDate = Console.ReadLine();
@@ -51,7 +62,18 @@
             string endDate = Console.ReadLine();
             meeting.EndDate = Convert.ToDateTime(endDate);
 
+            Console.Write("Enter meeting person name and surname");
+            string person = Console.ReadLine();
+            Participant newParticipant = new Participant(person);
+            meeting.Participants.Add(newParticipant);
+
             return meeting;
+        }
+
+        public static string RequestDataFromUser(string request)
+        {
+            Console.WriteLine(request);
+            return Console.ReadLine();
         }
 
         public static Meeting RemoveMeeting(List<Meeting> list, int nr, string responsiblePerson)

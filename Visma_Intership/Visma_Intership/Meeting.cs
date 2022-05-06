@@ -9,18 +9,19 @@
         public Type Type { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        //public List<Participant> participants;
+        public List<Participant> Participants { get; set; } = new List<Participant>();
 
         public Meeting(string name, string responsiblePerson, string description,
-            Category category, Type type, DateTime startDate, DateTime endDate)
+            Category category, Type type, DateTime startDate, DateTime endDate, List<Participant> participants)
         {
-            this.Name = name;
-            this.ResponsiblePerson = responsiblePerson;
-            this.Description = description;
-            this.Category = category;
-            this.Type = type;
-            this.StartDate = startDate;
-            this.EndDate = endDate;
+            Name = name;
+            ResponsiblePerson = responsiblePerson;
+            Description = description;
+            Category = category;
+            Type = type;
+            StartDate = startDate;
+            EndDate = endDate;
+            Participants = participants;
         }
 
         public Meeting()

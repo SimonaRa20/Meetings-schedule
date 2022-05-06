@@ -3,14 +3,12 @@
     public class Participant
     {
         public string Name { get; set; }
-        public string Surname { get; set; }
         public DateTime TimeWhenWasAdded { get; set; }
 
-        public Participant(string name, string surname, DateTime timeWhenWasAdded)
+        public Participant(string name)
         {
             Name = name;
-            Surname = surname;
-            TimeWhenWasAdded = timeWhenWasAdded;
+            TimeWhenWasAdded = DateTime.Now;
         }
     }
 }
