@@ -1,20 +1,22 @@
 ﻿namespace Visma_Intership
 {
-    class TaskUtils
+    public static class TaskUtils
     {
         public static void PrintMeetingsList(List<Meeting> list)
         {
-            Console.WriteLine(new string('-', 185));
-            Console.WriteLine(string.Format("| {0,5} | {1,15} | {2,30} | {3,50} | {4, 10} | {5,10} | {6,20} | {7,20} |", "Nr",
+            const int dashCount = 185;
+            string format = "| {0,5} | {1,15} | {2,30} | {3,50} | {4, 10} | {5,10} | {6,20} | {7,20} |";
+            Console.WriteLine(new string('-', dashCount));
+            Console.WriteLine(string.Format(format, "Nr",
            "Name", "Responsible Person", "Description", "Category", "Type", "StartDate", "EndDate"));
-            Console.WriteLine(new string('-', 185));
+            Console.WriteLine(new string('-', dashCount));
             for (int i = 0; i < list.Count; i++)
             {
                 Meeting meeting = list[i];
-                Console.WriteLine(string.Format("| {0,5} | {1,15} | {2,30} | {3,50} | {4, 10} | {5,10} | {6,20} | {7,20} |",
+                Console.WriteLine(string.Format(format,
                    i + 1, meeting.Name, meeting.ResponsiblePerson, meeting.Description, meeting.Category, meeting.Type,
                    meeting.StartDate, meeting.EndDate));
-                Console.WriteLine(new string('-', 185));
+                Console.WriteLine(new string('-', dashCount));
             }
         }
 
@@ -69,8 +71,6 @@
             return meeting;
         }
 
-
-
         public static List<Meeting> FilterByDescription(List<Meeting> list, string description)
         {
             List<Meeting> filteredList = new List<Meeting>();
@@ -98,12 +98,28 @@
             return filteredList;
         }
 
-        public static List<Meeting> FilterByCategory(List<Meeting> list, Category category)
+        public static List<Meeting> FilterByCategory(List<Meeting> list, string category)
         {
+            Category newCategory = (Category)Enum.Parse(typeof(Category), category);
             List<Meeting> filteredList = new List<Meeting>();
             for (int i = 0; i < list.Count; i++)
             {
-                if (list[i].Category == category)
+                if (list[i].Category == newCategory)
+                {
+                    filteredList.Add(list[i]);
+                }
+            }
+
+            return filteredList;
+        }
+
+        public static List<Meeting> FilterByType(List<Meeting> list, string type)
+        {
+            Type newType = (Type)Enum.Parse(typeof(Type), type);
+            List<Meeting> filteredList = new List<Meeting>();
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].Type == newType)
                 {
                     filteredList.Add(list[i]);
                 }
@@ -125,19 +141,7 @@
 
             return filteredList;
         }
-        //public static List<Meeting> FilterByTheNumberOfAttendees(List<Meeting> list, int attendeesNumber)
-        //{
-        //    List<Meeting> filteredList = new List<Meeting>();
-        //    for (int i = 0; i < list.Count; i++)
-        //    {
-        //        if (list[i].participants.Count > attendeesNumber)
-        //        {
-        //            filteredList.Add(list[i]);
-        //        }
-        //    }
 
-        //    return filteredList;
-        //}
         public static List<Meeting> DeleteMeeting(List<Meeting> list, Meeting meeting)
         {
             for (int i = 0; i < list.Count; i++)
@@ -149,17 +153,5 @@
             }
             return list;
         }
-        //public static Meeting AddAPersonToTheMeeting(Meeting meeting, Participant participant)
-        //{
-        //    for (int i = 0; i < meeting.participants.Count; i++)
-        //    {
-        //        if (meeting.participants[i] != participant)
-        //        {
-        //            //if (participant.listMeetings[])
-        //            meeting.participants.Add(participant);
-        //        }
-        //    }
-        //    return meeting;
-        //}
     }
 }

@@ -2,17 +2,16 @@
 
 namespace Visma_Intership
 {
-    public class FileServise : IFileService
+    public class FileService : IFileService
     {
         public T ReadFile<T>(string filename)
         {
-            var backingFile = Path.GetFullPath(filename);
-            if (!File.Exists(backingFile))
+            if (!File.Exists(filename))
             {
                 return default;
             }
 
-            var text = File.ReadAllText(backingFile);
+            var text = File.ReadAllText(filename);
             var result = JsonConvert.DeserializeObject<T>(text, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
             if (result == null)
             {
@@ -24,9 +23,7 @@ namespace Visma_Intership
 
         public void SaveFile<T>(T items, string filename)
         {
-            var backingFile = Path.GetFullPath(filename);
-
-            using (StreamWriter file = File.CreateText(backingFile))
+            using (StreamWriter file = File.CreateText(filename))
             {
                 JsonSerializer serializer = new JsonSerializer();
                 serializer.Serialize(file, items);
@@ -34,6 +31,6 @@ namespace Visma_Intership
         }
 
         public void DeleteFile(string filename)
-           => File.Delete(Path.Combine(FileSystem.AppDataDirectory, filename));
+           => File.Delete(filename);
     }
 }

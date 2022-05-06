@@ -7,49 +7,78 @@
         public static void Main(string[] args)
         {
             List<Meeting> meetingList = new List<Meeting>();
-            FileServise fileServise = new FileServise();
+            FileService fileServise = new FileService();
             MeetingService meetingService = new MeetingService(fileServise);
 
             meetingService.ReadMeetings();
 
             meetingList = meetingService.GetMeetings();
             TaskUtils.PrintMeetingsList(meetingList);
-            //TaskUtils.PrintMeetingsList(meetingList);
-
-            //Console.WriteLine(meetingList.Count);
-
-            DateTime dt2 = new DateTime(2015, 12, 31);
-            //Meeting meeting = new Meeting("Stand Up", "Simona Ragauskaite", "Prisisakysime savo daromos uzduoties progresa", Category.Short,
-            // Type.Live, dt2, dt2);
-
+            bool continueOperation = true;
             Console.WriteLine("Commands list: \n*Create meeting \n*Delete meeting \n*Add person to meeting  \n*Remove person from meeting \n*Filter meetings\nPlease write command:");
-            string command = Console.ReadLine();
-
-            switch (command)
+            while (continueOperation)
             {
-                case "Create meeting":
-                    CreateMeeting(meetingService, meetingList);
-                    break;
+                string command = Console.ReadLine();
 
-                case "Delete meeting":
-                    DeleteMeeting(meetingService, meetingList);
-                    break;
+                switch (command)
+                {
+                    case "Create meeting":
+                        CreateMeeting(meetingService, meetingList);
+                        break;
 
-                case "Add person to meeting":
-                    Console.WriteLine("Chosen command - add person to meeting");
-                    break;
+                    case "Delete meeting":
+                        DeleteMeeting(meetingService, meetingList);
+                        break;
 
-                case "Remove person from meeting":
-                    Console.WriteLine("Chosen command - remove person from meeting");
-                    break;
-                case "Filter meetings":
-                    Console.WriteLine("Chosen command - filter meetings");
-                    break;
-                default:
-                    Console.WriteLine("This command was not founded");
-                    break;
+                    case "Add person to meeting":
+                        Console.WriteLine("Chosen command - add person to meeting");
+                        break;
+
+                    case "Remove person from meeting":
+                        Console.WriteLine("Chosen command - remove person from meeting");
+                        break;
+                    case "Filter meetings":
+                        Console.WriteLine("Filter possibilities by: \n*Description \n*Responsible person \n*Category  \n*Type \n*Dates\n*The number of attendees\nPlease write command:");
+                        string filterCommand = Console.ReadLine();
+                        switch (filterCommand)
+                        {
+                            case "Description":
+                                FilterByDescription(meetingList);
+                                break;
+
+                            case "Responsible person":
+                                FilterByResponsiblePerson(meetingList);
+                                break;
+
+                            case "Category":
+                                FilterByCategory(meetingList);
+                                break;
+
+                            case "Type":
+                                FilterByType(meetingList);
+                                break;
+                            case "Dates":
+
+                                break;
+                            case "The number of attendees":
+
+                                break;
+                            default:
+                                Console.WriteLine("This filter possibility was not found");
+                                break;
+                        }
+
+                        break;
+                    default:
+                        Console.WriteLine("This command was not found");
+                        break;
+
+                }
             }
+
         }
+
+
         public static void CreateMeeting(MeetingService meetingService, List<Meeting> meetingList)
         {
             Meeting newMeeting = TaskUtils.AddNewMeeting();
@@ -73,7 +102,40 @@
             meetingService.RemoveMeeting(meeting);
             TaskUtils.PrintMeetingsList(meetingList);
         }
+
+        public static void FilterByDescription(List<Meeting> meetingList)
+        {
+            Console.WriteLine("Write description:");
+            string description = Console.ReadLine();
+            List<Meeting> filterByDescription = TaskUtils.FilterByDescription(meetingList, description);
+            TaskUtils.PrintMeetingsList(filterByDescription);
+        }
+
+        public static void FilterByResponsiblePerson(List<Meeting> meetingList)
+        {
+            Console.WriteLine("Write respnsible person:");
+            string responsiblePerson = Console.ReadLine();
+            List<Meeting> filterByResponsiblePerson = TaskUtils.FilterByResponsiblePerson(meetingList, responsiblePerson);
+            TaskUtils.PrintMeetingsList(filterByResponsiblePerson);
+        }
+
+        public static void FilterByCategory(List<Meeting> meetingList)
+        {
+            Console.WriteLine("Write category:");
+            string category = Console.ReadLine();
+            List<Meeting> filterByCategory = TaskUtils.FilterByCategory(meetingList, category);
+            TaskUtils.PrintMeetingsList(filterByCategory);
+        }
+
+        public static void FilterByType(List<Meeting> meetingList)
+        {
+            Console.WriteLine("Write type:");
+            string type = Console.ReadLine();
+            List<Meeting> filterByType = TaskUtils.FilterByType(meetingList, type);
+            TaskUtils.PrintMeetingsList(filterByType);
+        }
     }
+
 
 
 

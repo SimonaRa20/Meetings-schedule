@@ -4,7 +4,6 @@
     {
         private List<Meeting> _meetings { get; set; } = new List<Meeting>();
         private readonly IFileService _fileService;
-        public event EventHandler MeetingsUpdated;
 
         public MeetingService(IFileService fileService)
         {
@@ -21,7 +20,6 @@
             }
 
             _meetings = result;
-            MeetingsUpdated?.Invoke(this, null);
         }
 
         public void SaveMeetings()
@@ -35,15 +33,13 @@
         public void RemoveMeeting(Meeting removeMeeting)
         {
             var meeting = _meetings.Where(x => x == removeMeeting).FirstOrDefault();
+            if (meeting == null) return;
             _meetings.Remove(meeting);
-            MeetingsUpdated?.Invoke(this, null);
             SaveMeetings();
         }
         public void AddMeeting(Meeting newMeeting)
         {
-            //var meeting = _meetings.Where(x => x == newMeeting).FirstOrDefault();
             _meetings.Add(newMeeting);
-            MeetingsUpdated?.Invoke(this, null);
             SaveMeetings();
         }
     }
