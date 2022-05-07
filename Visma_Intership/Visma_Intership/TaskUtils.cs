@@ -31,44 +31,66 @@
         {
             Meeting meeting = new Meeting();
             Console.WriteLine("New Meeting");
-            Console.Write("Enter meeting name: ");
-            meeting.Name = Console.ReadLine();
 
-            Console.Write("Enter meeting responsible person: ");
-            meeting.ResponsiblePerson = Console.ReadLine();
+            string name = RequestDataFromUser("Enter meeting name: ");
+            while (!Validator.ValidateName(name))
+            {
+                Console.WriteLine("Please try again, name was incorrect");
+            }
+            meeting.Name = name;
 
-            Console.Write("Enter meeting description: ");
-            meeting.Description = Console.ReadLine();
+            string responsiblePerson = RequestDataFromUser("Enter meeting responsible person: ");
+            while (!Validator.ValidateResposiblePerson(responsiblePerson))
+            {
+                Console.WriteLine("Please try again, responsible person was incorrect");
+            }
+            meeting.ResponsiblePerson = responsiblePerson;
 
-            Console.Write("Enter meeting category (CodeMonkey/Hub/Short/TeamBuilding): ");
-            string category = Console.ReadLine();
-            Category newCategory = (Category)Enum.Parse(typeof(Category), category);
-            meeting.Category = newCategory;
+            string description = RequestDataFromUser("Enter meeting description: ");
+            while (!Validator.ValidateDescription(description))
+            {
+                Console.WriteLine("Please try again, description was incorrect");
+            }
+            meeting.Description = description;
 
-            Console.Write("Enter meeting type (Live/InPerson): ");
-
-            Type result;
-            while (!Validator.ValidateType(RequestDataFromUser("Enter meeting type (Live/InPerson): "), out result))
+            Category category;
+            while (!Validator.ValidateCategory(RequestDataFromUser("Enter meeting category (CodeMonkey/Hub/Short/TeamBuilding): "), out category))
             {
                 Console.WriteLine("Please try again, type was incorrect");
             }
-            meeting.Type = result;
+            meeting.Category = category;
 
-            Console.Write("Enter meeting start date (f.e. 2020-05-05 11:00:00): ");
-            string startDate = Console.ReadLine();
-            meeting.StartDate = Convert.ToDateTime(startDate);
+            Type type;
+            while (!Validator.ValidateType(RequestDataFromUser("Enter meeting type (Live/InPerson): "), out type))
+            {
+                Console.WriteLine("Please try again, type was incorrect");
+            }
+            meeting.Type = type;
 
-            Console.Write("Enter meeting end date (f.e. 2020-05-05 12:00:00): ");
-            string endDate = Console.ReadLine();
-            meeting.EndDate = Convert.ToDateTime(endDate);
+            DateTime startDate;
+            while (!Validator.ValidateDate(RequestDataFromUser("Enter meeting start date (f.e. 2020-05-05 11:00:00): "), out startDate))
+            {
+                Console.WriteLine("Please try again, date was incorrect");
+            }
+            meeting.StartDate = startDate;
 
-            Console.Write("Enter meeting person name and surname");
-            string person = Console.ReadLine();
-            Participant newParticipant = new Participant(person);
-            meeting.Participants.Add(newParticipant);
+            DateTime endDate;
+            while (!Validator.ValidateDate(RequestDataFromUser("Enter meeting end date (f.e. 2020-05-05 12:00:00): "), out endDate))
+            {
+                Console.WriteLine("Please try again, date was incorrect");
+            }
+            meeting.EndDate = endDate;
+
+            string attendeePerson = RequestDataFromUser("Enter meeting person name and surname");
+            while (!Validator.ValidateParticipant(attendeePerson))
+            {
+                Console.WriteLine("Please try again, person name and surname was incorrect");
+            }
+            meeting.Participants.Add(new Participant(attendeePerson));
 
             return meeting;
         }
+
 
         public static string RequestDataFromUser(string request)
         {
@@ -76,19 +98,13 @@
             return Console.ReadLine();
         }
 
-        public static Meeting RemoveMeeting(List<Meeting> list, int nr, string responsiblePerson)
+        public static Meeting FindMeeting(List<Meeting> list, int nr, string responsiblePerson)
         {
             int nrMeeting = nr - 1;
             Meeting meeting = new Meeting();
-            for (int i = 0; i < list.Count; i++)
+            if (list[nrMeeting].ResponsiblePerson == responsiblePerson)
             {
-                if (nrMeeting == i)
-                {
-                    if (list[i].ResponsiblePerson == responsiblePerson)
-                    {
-                        meeting = list[i];
-                    }
-                }
+                meeting = list[nrMeeting];
             }
             return meeting;
         }
@@ -98,12 +114,11 @@
             List<Meeting> filteredList = new List<Meeting>();
             for (int i = 0; i < list.Count; i++)
             {
-                if (list[i].Description == description)
+                if (list[i].Description.Contains(description, StringComparison.OrdinalIgnoreCase))
                 {
                     filteredList.Add(list[i]);
                 }
             }
-
             return filteredList;
         }
         public static List<Meeting> FilterByResponsiblePerson(List<Meeting> list, string responsiblePerson)
@@ -111,42 +126,37 @@
             List<Meeting> filteredList = new List<Meeting>();
             for (int i = 0; i < list.Count; i++)
             {
-                if (list[i].ResponsiblePerson == responsiblePerson)
+                if (list[i].ResponsiblePerson.Equals(responsiblePerson, StringComparison.OrdinalIgnoreCase))
                 {
                     filteredList.Add(list[i]);
                 }
             }
-
             return filteredList;
         }
 
-        public static List<Meeting> FilterByCategory(List<Meeting> list, string category)
+        public static List<Meeting> FilterByCategory(List<Meeting> list, Category category)
         {
-            Category newCategory = (Category)Enum.Parse(typeof(Category), category);
             List<Meeting> filteredList = new List<Meeting>();
             for (int i = 0; i < list.Count; i++)
             {
-                if (list[i].Category == newCategory)
+                if (list[i].Category == category)
                 {
                     filteredList.Add(list[i]);
                 }
             }
-
             return filteredList;
         }
 
-        public static List<Meeting> FilterByType(List<Meeting> list, string type)
+        public static List<Meeting> FilterByType(List<Meeting> list, Type type)
         {
-            Type newType = (Type)Enum.Parse(typeof(Type), type);
             List<Meeting> filteredList = new List<Meeting>();
             for (int i = 0; i < list.Count; i++)
             {
-                if (list[i].Type == newType)
+                if (list[i].Type == type)
                 {
                     filteredList.Add(list[i]);
                 }
             }
-
             return filteredList;
         }
 
@@ -164,29 +174,16 @@
             return filteredList;
         }
 
-        public static List<Meeting> DeleteMeeting(List<Meeting> list, Meeting meeting)
-        {
-            for (int i = 0; i < list.Count; i++)
-            {
-                if (list[i] == meeting)
-                {
-                    list.RemoveAt(i);
-                }
-            }
-            return list;
-        }
         public static List<Meeting> FilterByAttendeesCount(List<Meeting> list, int count)
         {
             List<Meeting> filteredList = new List<Meeting>();
             for (int i = 0; i < list.Count; i++)
             {
-
                 if (list[i].Participants.Count >= count)
                 {
                     filteredList.Add(list[i]);
                 }
             }
-
             return filteredList;
         }
     }

@@ -42,5 +42,10 @@
             _meetings.Add(newMeeting);
             SaveMeetings();
         }
+        public void AddPerson(Meeting newMeeting)
+        {
+            _meetings.Add(newMeeting);
+            SaveMeetings();
+        }
     }
 }

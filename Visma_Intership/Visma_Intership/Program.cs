@@ -43,25 +43,25 @@
                         switch (filterCommand)
                         {
                             case "Description":
-                                FilterByDescription(meetingList);
+                                DataFilter.FilterByDescription(meetingList);
                                 break;
 
                             case "Responsible person":
-                                FilterByResponsiblePerson(meetingList);
+                                DataFilter.FilterByResponsiblePerson(meetingList);
                                 break;
 
                             case "Category":
-                                FilterByCategory(meetingList);
+                                DataFilter.FilterByCategory(meetingList);
                                 break;
 
                             case "Type":
-                                FilterByType(meetingList);
+                                DataFilter.FilterByType(meetingList);
                                 break;
                             case "Dates":
-                                FilterByDates(meetingList);
+                                DataFilter.FilterByDates(meetingList);
                                 break;
                             case "The number of attendees":
-                                FilterByAttendeesCount(meetingList);
+                                DataFilter.FilterByAttendeesCount(meetingList);
                                 break;
                             default:
                                 Console.WriteLine("This filter possibility was not found");
@@ -98,68 +98,9 @@
             string deleteNr = Console.ReadLine();
             int nr = Convert.ToInt32(deleteNr);
 
-            Meeting meeting = TaskUtils.RemoveMeeting(meetingList, nr, nameSurname);
+            Meeting meeting = TaskUtils.FindMeeting(meetingList, nr, nameSurname);
             meetingService.RemoveMeeting(meeting);
             TaskUtils.PrintMeetingsList(meetingList);
         }
-
-        public static void FilterByDescription(List<Meeting> meetingList)
-        {
-            Console.WriteLine("Write description:");
-            string description = Console.ReadLine();
-            List<Meeting> filterByDescription = TaskUtils.FilterByDescription(meetingList, description);
-            TaskUtils.PrintMeetingsList(filterByDescription);
-        }
-
-        public static void FilterByResponsiblePerson(List<Meeting> meetingList)
-        {
-            Console.WriteLine("Write respnsible person:");
-            string responsiblePerson = Console.ReadLine();
-            List<Meeting> filterByResponsiblePerson = TaskUtils.FilterByResponsiblePerson(meetingList, responsiblePerson);
-            TaskUtils.PrintMeetingsList(filterByResponsiblePerson);
-        }
-
-        public static void FilterByCategory(List<Meeting> meetingList)
-        {
-            Console.WriteLine("Write category:");
-            string category = Console.ReadLine();
-            List<Meeting> filterByCategory = TaskUtils.FilterByCategory(meetingList, category);
-            TaskUtils.PrintMeetingsList(filterByCategory);
-        }
-
-        public static void FilterByType(List<Meeting> meetingList)
-        {
-            Console.WriteLine("Write type:");
-            string type = Console.ReadLine();
-            List<Meeting> filterByType = TaskUtils.FilterByType(meetingList, type);
-            TaskUtils.PrintMeetingsList(filterByType);
-        }
-
-        public static void FilterByDates(List<Meeting> meetingList)
-        {
-            Console.WriteLine("Write interval start date:");
-            string startDate = Console.ReadLine();
-            Console.WriteLine("Write interval end date:");
-            string endDate = Console.ReadLine();
-
-            DateTime start = Convert.ToDateTime(startDate);
-            DateTime end = Convert.ToDateTime(endDate);
-            List<Meeting> filterByDate = TaskUtils.FilterByDates(meetingList, start, end);
-            TaskUtils.PrintMeetingsList(filterByDate);
-        }
-
-        public static void FilterByAttendeesCount(List<Meeting> meetingList)
-        {
-            Console.WriteLine("Write attendees count:");
-            string count = Console.ReadLine();
-            int attendeesCount = Convert.ToInt32(count);
-            List<Meeting> filterByAttendeesCount = TaskUtils.FilterByAttendeesCount(meetingList, attendeesCount);
-            TaskUtils.PrintMeetingsList(filterByAttendeesCount);
-        }
     }
-
-
-
-
-
 }
