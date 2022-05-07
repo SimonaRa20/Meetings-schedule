@@ -42,10 +42,43 @@
             _meetings.Add(newMeeting);
             SaveMeetings();
         }
-        public void AddPerson(Meeting newMeeting)
+        public void AddPerson(Meeting meeting, Participant participant)
         {
-            _meetings.Add(newMeeting);
+            var foundMeeting = _meetings.Where(x => x == meeting).FirstOrDefault();
+            if (foundMeeting == null)
+            {
+                return;
+            }
+            foundMeeting.Participants.Add(participant);
             SaveMeetings();
+        }
+
+        public void RemovePerson(Meeting meeting, Participant participant)
+        {
+            var foundMeeting = _meetings.Where(x => x == meeting).FirstOrDefault();
+            if (foundMeeting == null)
+            {
+                return;
+            }
+            foundMeeting.Participants.Remove(participant);
+            SaveMeetings();
+        }
+
+        public void CreateNewMeeting()
+        {
+            Meeting meeting = new Meeting();
+            Console.WriteLine("New Meeting");
+
+            meeting.Name = DataRequestor.GetName();
+            meeting.ResponsiblePerson = DataRequestor.GetResponsiblePerson();
+            meeting.Description = DataRequestor.GetDescription();
+            meeting.Category = DataRequestor.GetCategory();
+            meeting.Type = DataRequestor.GetType();
+            meeting.StartDate = DataRequestor.GetStartDate();
+            meeting.EndDate = DataRequestor.GetEndDate();
+            meeting.Participants.Add(new Participant(DataRequestor.GetParticipantName()));
+
+            AddMeeting(meeting);
         }
     }
 }

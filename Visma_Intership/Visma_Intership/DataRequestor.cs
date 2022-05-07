@@ -8,6 +8,16 @@
             return Console.ReadLine();
         }
 
+        public static string GetName()
+        {
+            string name = RequestDataFromUser("Write name:");
+            while (!Validator.ValidateDescription(name))
+            {
+                name = RequestDataFromUser("Please try again write name");
+            }
+            return name;
+        }
+
         public static string GetDescription()
         {
             string description = RequestDataFromUser("Write description:");
@@ -50,16 +60,25 @@
             return result;
         }
 
-        public static DateTime GetDates()
+        private static DateTime GetDates(string text)
         {
-            string date = RequestDataFromUser("Write date: ");
+            string date = RequestDataFromUser(text);
             DateTime result;
             while (!Validator.ValidateDate(date, out result))
             {
                 date = RequestDataFromUser("Please try again write date");
             }
             return result;
+        }
 
+        public static DateTime GetStartDate()
+        {
+            return GetDates("Write start date: ");
+        }
+
+        public static DateTime GetEndDate()
+        {
+            return GetDates("Write end date: ");
         }
 
         public static int GetAttendeesCount()
@@ -71,6 +90,27 @@
                 attendeesCount = RequestDataFromUser("Please try again write attendees count");
             }
             return count;
+        }
+
+        public static string GetParticipantName()
+        {
+            string name = RequestDataFromUser("Write participant name and surname: ");
+            while (!Validator.ValidateParticipantName(name))
+            {
+                name = RequestDataFromUser("Please try again write participant name and surname");
+            }
+            return name;
+        }
+
+        public static int GetMeetingByNr()
+        {
+            string nr = RequestDataFromUser("Write meeting nr: ");
+            int result = 0;
+            while (!Validator.ValidateMeetingNr(nr, out result))
+            {
+                nr = RequestDataFromUser("Please try again write participant name and surname");
+            }
+            return result;
         }
     }
 }

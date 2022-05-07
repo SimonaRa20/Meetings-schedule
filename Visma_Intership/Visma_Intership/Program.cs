@@ -1,19 +1,18 @@
 ﻿namespace Visma_Intership
 {
-    class Program
+    public class Program
     {
-
+        private static IFileService _fileService;
+        private static IMeetingService _meetingService;
 
         public static void Main(string[] args)
         {
-            List<Meeting> meetingList = new List<Meeting>();
-            FileService fileServise = new FileService();
-            MeetingService meetingService = new MeetingService(fileServise);
+            _fileService = new FileService();
+            _meetingService = new MeetingService(_fileService);
+            _meetingService.ReadMeetings();
 
-            meetingService.ReadMeetings();
 
-            meetingList = meetingService.GetMeetings();
-            TaskUtils.PrintMeetingsList(meetingList);
+            TaskUtils.PrintMeetingsList(_meetingService.GetMeetings());
             bool continueOperation = true;
             Console.WriteLine("Commands list: \n*Create meeting \n*Delete meeting \n*Add person to meeting  \n*Remove person from meeting \n*Filter meetings\nPlease write command:");
             while (continueOperation)
@@ -23,19 +22,19 @@
                 switch (command)
                 {
                     case "Create meeting":
-                        CreateMeeting(meetingService, meetingList);
+                        CreateMeeting();
                         break;
 
                     case "Delete meeting":
-                        DeleteMeeting(meetingService, meetingList);
+                        DeleteMeeting();
                         break;
 
                     case "Add person to meeting":
-                        Console.WriteLine("Chosen command - add person to meeting");
+                        AddNewParticipant();
                         break;
 
                     case "Remove person from meeting":
-                        Console.WriteLine("Chosen command - remove person from meeting");
+                        RemoveParticipant();
                         break;
                     case "Filter meetings":
                         Console.WriteLine("Filter possibilities by: \n*Description \n*Responsible person \n*Category  \n*Type \n*Dates\n*The number of attendees\nPlease write command:");
@@ -43,54 +42,53 @@
                         switch (filterCommand)
                         {
                             case "Description":
-                                DataFilter.FilterByDescription(meetingList);
+                                DataFilter.FilterByDescription(_meetingService.GetMeetings());
                                 break;
 
                             case "Responsible person":
-                                DataFilter.FilterByResponsiblePerson(meetingList);
+                                DataFilter.FilterByResponsiblePerson(_meetingService.GetMeetings());
                                 break;
 
                             case "Category":
-                                DataFilter.FilterByCategory(meetingList);
+                                DataFilter.FilterByCategory(_meetingService.GetMeetings());
                                 break;
 
                             case "Type":
-                                DataFilter.FilterByType(meetingList);
+                                DataFilter.FilterByType(_meetingService.GetMeetings());
                                 break;
+
                             case "Dates":
-                                DataFilter.FilterByDates(meetingList);
+                                DataFilter.FilterByDates(_meetingService.GetMeetings());
                                 break;
+
                             case "The number of attendees":
-                                DataFilter.FilterByAttendeesCount(meetingList);
+                                DataFilter.FilterByAttendeesCount(_meetingService.GetMeetings());
                                 break;
+
                             default:
                                 Console.WriteLine("This filter possibility was not found");
                                 break;
                         }
 
                         break;
+
                     default:
                         Console.WriteLine("This command was not found");
                         break;
-
                 }
             }
-
         }
 
-
-        public static void CreateMeeting(MeetingService meetingService, List<Meeting> meetingList)
+        public static void CreateMeeting()
         {
-            Meeting newMeeting = TaskUtils.AddNewMeeting();
-            Console.WriteLine("Chosen command - create meeting");
-            meetingService.AddMeeting(newMeeting);
-            TaskUtils.PrintMeetingsList(meetingList);
+            _meetingService.CreateNewMeeting();
+            TaskUtils.PrintMeetingsList(_meetingService.GetMeetings());
         }
 
-        public static void DeleteMeeting(MeetingService meetingService, List<Meeting> meetingList)
+        public static void DeleteMeeting()
         {
             Console.WriteLine("There is meetings list:");
-            TaskUtils.PrintMeetingsList(meetingList);
+            TaskUtils.PrintMeetingsList(_meetingService.GetMeetings());
             Console.Write("Please write what are you : ");
             string nameSurname = Console.ReadLine();
 
@@ -98,9 +96,41 @@
             string deleteNr = Console.ReadLine();
             int nr = Convert.ToInt32(deleteNr);
 
-            Meeting meeting = TaskUtils.FindMeeting(meetingList, nr, nameSurname);
-            meetingService.RemoveMeeting(meeting);
-            TaskUtils.PrintMeetingsList(meetingList);
+            Meeting meeting = TaskUtils.FindMeeting(_meetingService.GetMeetings(), nr, nameSurname);
+            _meetingService.RemoveMeeting(meeting);
+            TaskUtils.PrintMeetingsList(_meetingService.GetMeetings());
+        }
+
+        public static void AddNewParticipant()
+        {
+
+
+
+
+
+            string participantName = DataRequestor.GetParticipantName();
+            int meetingNr = DataRequestor.GetMeetingByNr();
+            Meeting foundMeeting = _meetingService.GetMeetings()[meetingNr - 1];
+            foundMeeting.Participants.Add(new Participant(participantName));
+
+            _meetingService.AddMeeting(foundMeeting);
+        }
+
+        public static void RemoveParticipant()
+        {
+            string participantName = DataRequestor.GetParticipantName();
+
+            for (int i = 0; i < _meetingService.GetMeetings().Count; i++)
+            {
+                if (_meetingService.GetMeetings()[i].ResponsiblePerson != participantName)
+                {
+                    _meetingService.RemovePerson(_meetingService.GetMeetings()[i], new Participant(participantName));
+                }
+                else
+                {
+                    return;
+                }
+            }
         }
     }
 }

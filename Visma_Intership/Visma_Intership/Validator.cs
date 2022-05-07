@@ -13,7 +13,7 @@
 
         public static bool ValidateDescription(string description)
         {
-            if (!string.IsNullOrEmpty(description))
+            if (!string.IsNullOrWhiteSpace(description))
             {
                 return true;
             }
@@ -22,7 +22,7 @@
 
         public static bool ValidateName(string name)
         {
-            if (!string.IsNullOrEmpty(name))
+            if (!string.IsNullOrWhiteSpace(name))
             {
                 return true;
             }
@@ -31,7 +31,7 @@
 
         public static bool ValidateResposiblePerson(string responsiblePerson)
         {
-            if (!string.IsNullOrEmpty(responsiblePerson))
+            if (!string.IsNullOrWhiteSpace(responsiblePerson))
             {
                 return true;
             }
@@ -58,20 +58,29 @@
 
         public static bool ValidateDate(string date, out DateTime result)
         {
-            if (!DateTime.TryParse(date, out result))
+            if (!DateTime.TryParse(date, out result) || result <= DateTime.Now)
             {
                 return false;
             }
             return true;
         }
 
-        public static bool ValidateParticipant(string participant)
+        public static bool ValidateParticipantName(string participant)
         {
-            if (!string.IsNullOrEmpty(participant))
+            if (!string.IsNullOrWhiteSpace(participant))
             {
                 return true;
             }
             return false;
+        }
+
+        public static bool ValidateMeetingNr(string nr, out int result)
+        {
+            if (!int.TryParse(nr, out result))
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
