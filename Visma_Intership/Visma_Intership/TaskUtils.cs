@@ -5,7 +5,7 @@
         public static void PrintMeetingsList(List<Meeting> list)
         {
             const int dashCount = 185;
-            string format = "| {0,5} | {1,15} | {2,30} | {3,50} | {4, 10} | {5,10} | {6,20} | {7,20} | {8,30} |";
+            string format = "| {0,5} | {1,15} | {2,20} | {3,30} | {4, 10} | {5,10} | {6,20} | {7,20} | {8,30} |";
             Console.WriteLine(new string('-', dashCount));
             Console.WriteLine(string.Format(format, "Nr",
            "Name", "Responsible Person", "Description", "Category", "Type", "StartDate", "EndDate", "Participants"));
@@ -155,7 +155,7 @@
             List<Meeting> filteredList = new List<Meeting>();
             for (int i = 0; i < list.Count; i++)
             {
-                if (list[i].StartDate >= startDate && list[i].EndDate < endDate)
+                if (list[i].StartDate >= startDate && list[i].StartDate < endDate)
                 {
                     filteredList.Add(list[i]);
                 }
@@ -174,6 +174,20 @@
                 }
             }
             return list;
+        }
+        public static List<Meeting> FilterByAttendeesCount(List<Meeting> list, int count)
+        {
+            List<Meeting> filteredList = new List<Meeting>();
+            for (int i = 0; i < list.Count; i++)
+            {
+
+                if (list[i].Participants.Count >= count)
+                {
+                    filteredList.Add(list[i]);
+                }
+            }
+
+            return filteredList;
         }
     }
 }

@@ -58,10 +58,10 @@
                                 FilterByType(meetingList);
                                 break;
                             case "Dates":
-
+                                FilterByDates(meetingList);
                                 break;
                             case "The number of attendees":
-
+                                FilterByAttendeesCount(meetingList);
                                 break;
                             default:
                                 Console.WriteLine("This filter possibility was not found");
@@ -133,6 +133,28 @@
             string type = Console.ReadLine();
             List<Meeting> filterByType = TaskUtils.FilterByType(meetingList, type);
             TaskUtils.PrintMeetingsList(filterByType);
+        }
+
+        public static void FilterByDates(List<Meeting> meetingList)
+        {
+            Console.WriteLine("Write interval start date:");
+            string startDate = Console.ReadLine();
+            Console.WriteLine("Write interval end date:");
+            string endDate = Console.ReadLine();
+
+            DateTime start = Convert.ToDateTime(startDate);
+            DateTime end = Convert.ToDateTime(endDate);
+            List<Meeting> filterByDate = TaskUtils.FilterByDates(meetingList, start, end);
+            TaskUtils.PrintMeetingsList(filterByDate);
+        }
+
+        public static void FilterByAttendeesCount(List<Meeting> meetingList)
+        {
+            Console.WriteLine("Write attendees count:");
+            string count = Console.ReadLine();
+            int attendeesCount = Convert.ToInt32(count);
+            List<Meeting> filterByAttendeesCount = TaskUtils.FilterByAttendeesCount(meetingList, attendeesCount);
+            TaskUtils.PrintMeetingsList(filterByAttendeesCount);
         }
     }
 
