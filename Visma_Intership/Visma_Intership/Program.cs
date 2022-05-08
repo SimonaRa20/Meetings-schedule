@@ -103,34 +103,52 @@
 
         public static void AddNewParticipant()
         {
-
-
-
-
-
             string participantName = DataRequestor.GetParticipantName();
             int meetingNr = DataRequestor.GetMeetingByNr();
+            int participantsCount = _meetingService.GetMeetings()[meetingNr - 1].Participants.Count;
             Meeting foundMeeting = _meetingService.GetMeetings()[meetingNr - 1];
-            foundMeeting.Participants.Add(new Participant(participantName));
+            DateTime meetingStartTime = foundMeeting.StartDate;
+            DateTime meetingEndTime = foundMeeting.EndDate;
 
-            _meetingService.AddMeeting(foundMeeting);
+            for (int i = 0; i < participantsCount; i++)
+            {
+                if (_meetingService.GetMeetings()[meetingNr - 1].Participants[i].Name == participantName)
+                {
+                    return;
+                }
+            }
+
+            for (int i = 0; i < _meetingService.GetMeetings().Count; i++)
+            {
+                if (_meetingService.GetMeetings()[i].StartDate < meetingStartTime && meetingStartTime == _meetingService.GetMeetings()[i].EndDate && _meetingService.GetMeetings()[i].EndDate < meetingEndTime ||
+                    _meetingService.GetMeetings()[i].StartDate > meetingStartTime && meetingEndTime == _meetingService.GetMeetings()[i].StartDate && _meetingService.GetMeetings()[i].EndDate > meetingEndTime ||
+                    _meetingService.GetMeetings()[i].StartDate < meetingStartTime && _meetingService.GetMeetings()[i].StartDate < meetingEndTime ||
+                    _meetingService.GetMeetings()[i].StartDate > meetingStartTime && _meetingService.GetMeetings()[i].StartDate > meetingEndTime)
+                {
+                    _meetingService.AddPerson(foundMeeting, new Participant(participantName));
+                }
+                else
+                {
+                    Console.WriteLine("This person has meeting at the same time");
+                }
+            }
+            TaskUtils.PrintMeetingsList(_meetingService.GetMeetings());
         }
 
         public static void RemoveParticipant()
         {
             string participantName = DataRequestor.GetParticipantName();
+            int meetingNr = DataRequestor.GetMeetingByNr();
 
-            for (int i = 0; i < _meetingService.GetMeetings().Count; i++)
+            if (_meetingService.GetMeetings()[meetingNr - 1].ResponsiblePerson != participantName)
             {
-                if (_meetingService.GetMeetings()[i].ResponsiblePerson != participantName)
-                {
-                    _meetingService.RemovePerson(_meetingService.GetMeetings()[i], new Participant(participantName));
-                }
-                else
-                {
-                    return;
-                }
+                _meetingService.RemovePerson(_meetingService.GetMeetings()[meetingNr - 1], new Participant(participantName));
             }
+            else
+            {
+                return;
+            }
+            TaskUtils.PrintMeetingsList(_meetingService.GetMeetings());
         }
     }
 }
